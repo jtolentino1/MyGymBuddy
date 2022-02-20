@@ -19,5 +19,4 @@
  
  We can also add more exercises as well, and this would be a simple addition, and it will benefit heavily from the improvements that can be made to our camera capturing abilities. 
 
-One large improvement that we could make would be to have users be able to put in their own workout so that they are not limited to the workouts that we have made for them. 
- >
+One large improvement that we could make would be to have users be able to put in their own workout so that they are not limited to the workouts that we have made for them. >
