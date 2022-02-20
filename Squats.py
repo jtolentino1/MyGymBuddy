@@ -84,6 +84,8 @@ def start(reps):
                 cv2.putText(image, str(counter), 
                             (10,60), 
                             cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255), 2, cv2.LINE_AA)
+
+                cv2.putText(image, 'DONE', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
                 
                 # Stage data
                 cv2.putText(image, 'STAGE', (65,12), 
@@ -105,13 +107,16 @@ def start(reps):
                     break
 
                 if (counter == reps):
+                    # time.sleep(3)
 
-                    cv2.putText(image, 'Set Done!', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
-                    time.sleep(3)
-                    break
-                
+                    cap.release()
+
+                    image2 = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+                    cv2.putText(image2, 'DONE', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
+                    cv2.imshow('new window',image2)
+                    # cv2.destroyAllWindows()
+
             break
-                    
-                    
-        cap.release()
-        cv2.destroyAllWindows()
+                          
+start(0)
+

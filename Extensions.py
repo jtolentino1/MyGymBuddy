@@ -107,7 +107,7 @@ def start(reps):
                     break
 
                 if (counter == reps):
-
+                    time.sleep(1)
                     cv2.putText(image, 'Set Done!', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
                     time.sleep(3)
                     break
