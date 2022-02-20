@@ -4,18 +4,9 @@
  
 ## About
 MyGymBuddy is python web application (hosted using streamlit) that uses computer vision (through openCV and mediapipe) in order to visualize the exercises of the user. In the application, Users can select from a library of exercises and build their routine at home. From there, using their webcams, they are able to see how well their form is with feedback from the application.
- 
- ![alt text](https://github.com/jtolentino1/MyGymBuddy/blob/main/MyGymBuddy.jpg)
- 
+  
  ## Showcase
  
-<img width="789" alt="Screen Shot 2022-02-20 at 1 12 12 PM" src="https://user-images.githubusercontent.com/79039790/154862335-b06ab19b-4ad9-41a7-a42e-3432315ae206.png">
-
-<img width="789" alt="Screen Shot 2022-02-20 at 1 12 19 PM" src="https://user-images.githubusercontent.com/79039790/154862339-6e7f38db-bd7d-4737-8680-38079318e6f3.png">
-
-
-<img width="714" alt="Screen Shot 2022-02-20 at 1 13 12 PM" src="https://user-images.githubusercontent.com/79039790/154862396-8153b783-a75f-4bb0-b2a9-d31601a0e7a1.png">
-
  
  ## What we learned
  
