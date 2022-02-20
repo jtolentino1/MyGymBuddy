@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import streamlit as st 
-import starter
+import logic
 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
@@ -27,4 +27,4 @@ for count, item in enumerate(exercise_list):
 options = st.button("Click me to begin.")
 if options:
     st.write(exercise_to_do)
-    starter.start(exercise_to_do)
+    logic.start(exercise_to_do)
