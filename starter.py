@@ -2,11 +2,14 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import streamlit as st 
-import starter
+import logic
+from PIL import Image
 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
+website_icon = Image.open('mascot.jpg')
+st.set_page_config(page_title='MyGymBuddy',page_icon=website_icon)
 st.title("MyGymBuddy")
 st.write("Select an exercise:")
 
@@ -27,4 +30,4 @@ for count, item in enumerate(exercise_list):
 options = st.button("Click me to begin.")
 if options:
     st.write(exercise_to_do)
-    starter.start(exercise_to_do)
+    logic.start(exercise_to_do)
