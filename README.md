@@ -15,4 +15,9 @@
  
  ## What can be improved?
  
- < Some of the biggest issues that we faced were having one camera connected at a time, which prevented us from being able to have as many excerises as we wanted to. One reason why this is important and an improvement is that we can have more excersies and can have the user decide how they want to do their workout with having the need to move the camera.  >
+ < Some of the biggest issues that we faced were having one camera connected at a time, which prevented us from being able to have as many exercises as we wanted to. One reason why this is important, and an improvement is that we can have more exercises and can have the user decide how they want to do their work out with having the need to move the camera.  
+ 
+ We can also add more exercises as well, and this would be a simple addition, and it will benefit heavily from the improvements that can be made to our camera capturing abilities. 
+
+One large improvement that we could make would be to have users be able to put in their own workout so that they are not limited to the workouts that we have made for them. 
+ >
