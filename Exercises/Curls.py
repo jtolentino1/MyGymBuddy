@@ -24,7 +24,7 @@ def calculate_angle(a, b, c):
 def start(sets, reps):
     cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
     sets_counter = 0
-    
+
     while sets_counter < sets:
         # Curl reps_counter variables
         reps_counter = 0 
@@ -117,6 +117,7 @@ def start(sets, reps):
                         break
                 except:
                     pass
+            sets_counter += 1
     cv2.putText(image, 'Set Done!', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
     cv2.imshow('Mediapipe Feed', image)
     time.sleep(3)                     

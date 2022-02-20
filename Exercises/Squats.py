@@ -104,8 +104,8 @@ def start(sets, reps):
                         break
 
                 except:
-                    pass                  
-                    
+                    pass   
+            sets_counter += 1                
     cap.release()
     cv2.destroyAllWindows()
 
