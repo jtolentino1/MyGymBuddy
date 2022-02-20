@@ -28,6 +28,7 @@ def start(sets, reps):
     while sets_counter < sets:
         # Rows reps_counter variables
         reps_counter = 0
+        switch_sides = False
         stage = None
 
         # Setup mediapipe instance
@@ -50,36 +51,44 @@ def start(sets, reps):
                 # Extract landmarks
                 try:
                     landmarks = results.pose_landmarks.landmark
-                    
                     # Get coordinates
-                    shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
-                                landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
-                    elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
-                             landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]
-                    wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,
-                             landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]
-                    hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,
-                           landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
-                    knee = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x,
-                            landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
-
+                    if switch_sides == False:
+                        shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+                                    landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
+                        elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
+                                landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]
+                        wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,
+                                landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]
+                        hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,
+                            landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
+                        knee = [landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value].x,
+                            landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value].y] 
+                    else:
+                        shoulder = [landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].x,
+                                    landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].y]
+                        elbow = [landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value].x,
+                                landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value].y]
+                        wrist = [landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value].x,
+                                landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value].y]
+                        hip = [landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].x,
+                            landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].y]
+                        knee = [landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value].x,
+                            landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value].y]                       
+                    
                     # Setup status box
                     cv2.rectangle(image, (0,0), (225,73), (245,117,16), -1)
                     
                     # Rep data
-                    cv2.putText(image, 'REPS', (15,12), 
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
-                    cv2.putText(image, str(reps_counter), 
-                                (10,60), 
-                                cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255), 2, cv2.LINE_AA)
                     
+                    cv2.putText(image, 'REPS', (12,16), 
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0,0,0), 1, cv2.LINE_AA)
+                    cv2.putText(image, str(reps_counter), (15,60), 
+                                cv2.FONT_HERSHEY_SIMPLEX, 1.75, (255,255,255), 2, cv2.LINE_AA)
                     # Stage data
-                    cv2.putText(image, 'STAGE', (65,12), 
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
-                    cv2.putText(image, stage, 
-                                (60,60), 
-                                cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255), 2, cv2.LINE_AA)
-                    
+                    cv2.putText(image, 'STAGE', (110,16), 
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0,0,0), 1, cv2.LINE_AA)
+                    cv2.putText(image, stage, (100,55), 
+                                cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255,255,255), 2, cv2.LINE_AA)
                     
                     # Render detections
                     mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
@@ -90,7 +99,7 @@ def start(sets, reps):
                     angle = calculate_angle(shoulder, elbow, wrist)
 
                     # Make sure back is flat as possible
-                    angle_correction = calculate_angle(shoulder,hip,knee)
+                    angle_correction = calculate_angle(shoulder, hip, knee)
 
                     # Visualize angle
                     cv2.putText(image, str(angle), 
@@ -113,7 +122,17 @@ def start(sets, reps):
                             stage = "down"
                             reps_counter +=1     
                     
-                    cv2.imshow('Mediapipe Feed', image)
+                    if switch_sides == False and reps_counter == reps:
+                        switch_sides = True
+                        reps_counter = 0
+                        cv2.rectangle(image, (250,230), (420,260), (0,255,0), -1)
+                        cv2.putText(image, 'SWITCH SIDES', (270,250), 
+                                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
+                        cv2.imshow('Mediapipe Feed', image)
+                        cv2.waitKey(1) 
+                        time.sleep(3)
+                    else:
+                        cv2.imshow('Mediapipe Feed', image)
 
                     # Used for testing
                     if cv2.waitKey(10) & 0xFF == ord('q'):
@@ -122,7 +141,24 @@ def start(sets, reps):
                 except:
                     pass
             sets_counter += 1
-    time.sleep(3)           
+            
+    
+            if (sets_counter!=sets):
+                try:
+                    cv2.putText(image, 'FINISHED SET', (100,250), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,0,0), 3, cv2.LINE_AA)
+                    cv2.imshow('Mediapipe Feed', image)
+                    cv2.waitKey(1)
+                    #time.sleep(60)   
+
+                except:
+                    pass 
+    
+    cv2.rectangle(image, (50,180), (600,400), (0,255,0), -1)
+    cv2.putText(image, 'FINISHED EXERCISE', (100,250), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255,255,255), 3, cv2.LINE_AA)
+    cv2.putText(image, 'REST FOR 60s' , (155,350), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255,255,255), 3, cv2.LINE_AA)   
+    cv2.imshow('Mediapipe Feed', image)
+    cv2.waitKey(1) 
+    time.sleep(60)                      
     cap.release()
     cv2.destroyAllWindows()              
 

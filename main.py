@@ -1,34 +1,38 @@
 import json
-import Curls
-import Squats
-import Extensions
-import Crunches
-import Rows
-import BenchPress
+import Exercises.Curls
+import Exercises.Squats
+import Exercises.Extensions
+import Exercises.Crunches
+import Exercises.Rows
+import Exercises.BenchPress
 
 def start(arr):
     for i in arr:
         if i == 'Bicep Curl':
             reps = int(arr['Bicep Curl']['reps'])
             sets = int(arr['Bicep Curl']['sets'])
-            Curls.start(sets,reps)
+            Exercises.Curls.start(sets,reps)
         elif i == 'Extensions':
             reps = int(arr['Extensions']['reps'])
             sets = int(arr['Extensions']['sets'])
-            Extensions.start(sets, reps)
+            Exercises.Extensions.start(sets, reps)
         elif i == 'Squats':
             reps = int(arr['Squats']['reps'])
             sets = int(arr['Squats']['sets'])
-            Squats.start(sets,reps)
+            Exercises.Squats.start(sets,reps)
         elif i == 'Crunches':
             reps = int(arr['Crunches']['reps'])
             sets = int(arr['Crunches']['sets'])
-            Crunches.start(sets, reps)
+            Exercises.Crunches.start(sets, reps)
         elif i == 'Rows':
             reps = int(arr['Rows']['reps'])
             sets = int(arr['Rows']['sets'])
-            Rows.start(sets,reps)
+            Exercises.Rows.start(sets,reps)
         elif i == 'Benchpress':
             reps = int(arr['Benchpress']['reps'])
             sets = int(arr['Benchpress']['sets'])
-            BenchPress.start(sets,reps)
+            Exercises.BenchPress.start(sets,reps)
+
+if __name__ == "__main__":
+    arr = {"Bicep Curl": {"reps": 3, "sets": 1}, "Rows": {"reps": 3, "sets": 1}}
+    start(arr)

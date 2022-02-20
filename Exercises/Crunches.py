@@ -102,9 +102,25 @@ def start(sets, reps):
 
                 except:
                     pass    
-            sets_counter += 1         
+            sets_counter += 1
+            if (sets_counter!=sets):
+                try:
+                    cv2.putText(image, 'FINISHED SET', (100,250), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,0,0), 3, cv2.LINE_AA)
+                    cv2.imshow('Mediapipe Feed', image)
+                    cv2.waitKey(1)
+                    #time.sleep(60)   
+
+                except:
+                    pass 
+                            
+    cv2.rectangle(image, (50,180), (600,400), (0,255,0), -1)
+    cv2.putText(image, 'FINISHED EXERCISE', (100,250), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255,255,255), 3, cv2.LINE_AA)
+    cv2.putText(image, 'REST FOR 60s' , (155,350), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255,255,255), 3, cv2.LINE_AA)   
+    cv2.imshow('Mediapipe Feed', image)
+    cv2.waitKey(1) 
+    time.sleep(60)                      
     cap.release()
-    cv2.destroyAllWindows()
+    cv2.destroyAllWindows()         
 
 if __name__ == "__main__":
     start(1,5)
