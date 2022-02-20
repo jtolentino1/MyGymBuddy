@@ -8,11 +8,16 @@
  ## Showcase
  
 <img width="786" alt="Screen Shot 2022-02-20 at 1 09 37 PM" src="https://user-images.githubusercontent.com/79039790/154862243-53c14b3e-fa1b-4ca8-8784-8c7fc41248a4.png">
+
+ <img width="780" alt="Screen Shot 2022-02-20 at 1 09 45 PM" src="https://user-images.githubusercontent.com/79039790/154862275-9439b317-0b6c-471a-b3ac-57f97af56bc0.png">
+
+
  
  ## What we learned
  
  This was a great learning experience for all memebers of the team, as we learned that how to use the OpenCV library, as well as how to use streamlit library that Python offerend. This was also a great experience where we all worked together and collaborated and how to split up tasks to ensure that no one was left out and to make sure that our project was completed in the right amount of time. 
- 
+
+
  ## What can be improved?
 
  
