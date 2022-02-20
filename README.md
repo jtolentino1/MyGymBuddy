@@ -23,9 +23,12 @@ One large improvement that we could make would be to have users be able to put i
 
 ## Requirements
 pip install opencv-python
+
 pip install mediapipe
+
 pip install streamlit
 
 ## Instructions
 cd into MyGymBuddy
+
 streamlit run starter.py
