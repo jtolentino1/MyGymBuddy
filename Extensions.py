@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# EXTENSIONS.PY
+
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -112,8 +114,7 @@ def start(reps):
                     time.sleep(3)
                     break
                 
-            break
-                    
+            break    
                     
     cap.release()
     cv2.destroyAllWindows()

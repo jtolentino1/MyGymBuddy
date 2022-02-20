@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# CURLS.PY
+
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -23,8 +25,7 @@ def calculate_angle(a,b,c):
 
 def start(reps):
     print(reps)
-#st.title("MyFitnessBuddy")
-#run = st.checkbox('Run')
+
     cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
     counter = 0
 
@@ -73,6 +74,7 @@ def start(reps):
                     if angle < 45 and stage =='up':
                         stage="down"
                         counter +=1
+                        
                         print(counter)
                             
                 except:
@@ -117,4 +119,3 @@ def start(reps):
                     
     cap.release()
     cv2.destroyAllWindows()              
-            

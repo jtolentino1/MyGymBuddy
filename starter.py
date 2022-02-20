@@ -3,7 +3,10 @@ import mediapipe as mp
 import numpy as np
 import streamlit as st 
 import logic
+<<<<<<< HEAD
 from PIL import Image
+=======
+>>>>>>> 22d7182368d104c9f47d23e6a129b19fc9554230
 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
