@@ -11,6 +11,9 @@
 
 <img width="789" alt="Screen Shot 2022-02-20 at 1 12 19 PM" src="https://user-images.githubusercontent.com/79039790/154862339-6e7f38db-bd7d-4737-8680-38079318e6f3.png">
 
+
+<img width="714" alt="Screen Shot 2022-02-20 at 1 13 12 PM" src="https://user-images.githubusercontent.com/79039790/154862396-8153b783-a75f-4bb0-b2a9-d31601a0e7a1.png">
+
  
  ## What we learned
  
