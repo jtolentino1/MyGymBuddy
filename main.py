@@ -5,8 +5,11 @@ import Squats
 def main(arr):
     for i in arr:
         if i == 'Bicep Curl':
-            Curls.main()
+            reps = arr['Bicep Curl']['reps']
+            Curls.start(reps)
         elif i == 'Extensions':
-            Squats.main()
+            reps = arr['Bicep Curl']['reps']
+            Squats.start(reps)
         elif i == 'Squats':
-            Squats.main()
+            reps = arr['Bicep Curl']['reps']
+            Squats.start(reps)
