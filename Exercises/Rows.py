@@ -4,7 +4,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import time
-#import streamlit as st 
+
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
@@ -16,24 +16,24 @@ def calculate_angle(a,b,c):
     radians = np.arctan2(c[1]-b[1], c[0]-b[0]) - np.arctan2(a[1]-b[1], a[0]-b[0])
     angle = np.abs(radians*180.0/np.pi)
     
-    if angle >180.0:
+    if angle > 180.0:
         angle = 360-angle
         
     return angle 
-def start():
-#st.title("MyFitnessBuddy")
-#run = st.checkbox('Run')
+
+def start(sets, reps):
     cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
-    counter = 0 
+    sets_counter = 0 
 
-
-    while True:
-        # Curl counter variables
+    while sets_counter < sets:
+        # Rows reps_counter variables
+        reps_counter = 0
         stage = None
 
-        ## Setup mediapipe instance
+        # Setup mediapipe instance
         with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
-            while cap.isOpened():
+            cap.isOpened()
+            while reps_counter < reps:
                 ret, frame = cap.read()
                 
                 # Recolor image to RGB
@@ -52,18 +52,24 @@ def start():
                     landmarks = results.pose_landmarks.landmark
                     
                     # Get coordinates
-                    shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
-                    elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]
-                    wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]
-                    hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
-                    knee = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x,landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
+                    shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+                                landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
+                    elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
+                             landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]
+                    wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,
+                             landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]
+                    hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,
+                           landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
+                    knee = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x,
+                            landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
+
                     # Setup status box
                     cv2.rectangle(image, (0,0), (225,73), (245,117,16), -1)
                     
                     # Rep data
                     cv2.putText(image, 'REPS', (15,12), 
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
-                    cv2.putText(image, str(counter), 
+                    cv2.putText(image, str(reps_counter), 
                                 (10,60), 
                                 cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255), 2, cv2.LINE_AA)
                     
@@ -78,11 +84,12 @@ def start():
                     # Render detections
                     mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
                                             mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=2), 
-                                            mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2) 
-                                            
-                                            )    
+                                            mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2))    
+                    
                     # Calculate angle
                     angle = calculate_angle(shoulder, elbow, wrist)
+
+                    # Make sure back is flat as possible
                     angle_correction = calculate_angle(shoulder,hip,knee)
 
                     # Visualize angle
@@ -91,42 +98,32 @@ def start():
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
                                 )
                     
+                    # If back is not flat, user has incorrect form
                     if angle_correction > 100:
                         cv2.rectangle(image, (250,230), (420,260), (0,0,255), -1)
                         cv2.putText(image, 'INCORRECT FORM', (270,250), 
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
-                            
-                        cv2.imshow("Mediapipe Feed", image)
-                    
-                    
+                    # Otherwise, add to reps_counter               
                     else:
+                        # At bottom of movement
                         if angle > 160:
                             stage = "up"
-                        if angle < 60 and stage =='up':
-                            stage="down"
-                            counter +=1
-                            print(counter)           
+                        # At top of movement
+                        elif angle < 60 and stage =='up':
+                            stage = "down"
+                            reps_counter +=1     
                     
-                        cv2.imshow('Mediapipe Feed', image)
+                    cv2.imshow('Mediapipe Feed', image)
 
+                    # Used for testing
                     if cv2.waitKey(10) & 0xFF == ord('q'):
                         break
 
-                    if (counter == 5 and stage == "up"):
-
-                        cv2.putText(image, 'Set Done!', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
-                        time.sleep(3)
-                        break
                 except:
                     pass
-                
-            break
-                    
-                    
+    time.sleep(3)           
     cap.release()
     cv2.destroyAllWindows()              
-            
-
 
 if __name__ == "__main__":
-    start()
+    start(1, 5)
