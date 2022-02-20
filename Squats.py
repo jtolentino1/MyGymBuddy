@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import time
+
 #import streamlit as st 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
@@ -107,16 +108,14 @@ def start(reps):
                     break
 
                 if (counter == reps):
-                    # time.sleep(3)
-
-                    cap.release()
-
-                    image2 = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-                    cv2.putText(image2, 'DONE', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
-                    cv2.imshow('new window',image2)
-                    # cv2.destroyAllWindows()
-
+                    time.sleep(1)
+                    cv2.putText(image, 'Set Done!', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
+                    time.sleep(3)
+                    break
+                
             break
-                          
-start(0)
 
+    cap.release()
+    cv2.destroyAllWindows()              
+
+start(0)

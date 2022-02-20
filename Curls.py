@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# CURLS.PY
+
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -28,7 +30,7 @@ def start(reps):
     counter = 0
 
 
-    while counter < reps:
+    while True:
         # Curl counter variables
         stage = None
 
@@ -72,6 +74,7 @@ def start(reps):
                     if angle < 45 and stage =='up':
                         stage="down"
                         counter +=1
+                        
                         print(counter)
                             
                 except:
@@ -106,15 +109,13 @@ def start(reps):
 
                 if cv2.waitKey(10) & 0xFF == ord('q'):
                     break
-        
-    #             if (counter == reps):
-    #                 time.sleep(1)
-    #                 cv2.putText(image, 'Set Done!', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
-    #                 time.sleep(3)
-    #                 break
-    #         break
-                    
-    # cap.release()
-    # cv2.destroyAllWindows()              
 
-start(3)
+                if (counter == reps):
+                    time.sleep(1)
+                    cv2.putText(image, 'Set Done!', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
+                    time.sleep(3)
+                    break
+            break
+                    
+    cap.release()
+    cv2.destroyAllWindows()              
