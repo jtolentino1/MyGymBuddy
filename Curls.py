@@ -20,13 +20,11 @@ def calculate_angle(a,b,c):
         angle = 360-angle
         
     return angle 
-
-def start(reps):
-    print(reps)
+def start():
 #st.title("MyFitnessBuddy")
 #run = st.checkbox('Run')
     cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
-    counter = 0
+    counter = 0 
 
 
     while True:
@@ -57,65 +55,73 @@ def start(reps):
                     shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
                     elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]
                     wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]
+                    hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
+                    # Setup status box
+                    cv2.rectangle(image, (0,0), (225,73), (245,117,16), -1)
                     
+                    # Rep data
+                    cv2.putText(image, 'REPS', (15,12), 
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
+                    cv2.putText(image, str(counter), 
+                                (10,60), 
+                                cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255), 2, cv2.LINE_AA)
+                    # Stage data
+                    cv2.putText(image, 'STAGE', (65,12), 
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
+                    cv2.putText(image, stage, 
+                                (60,60), 
+                                cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255), 2, cv2.LINE_AA)
+                    
+                    # Render detections
+                    
+                    mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
+                                            mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=2), 
+                                            mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2) 
+                                            ) 
                     # Calculate angle
                     angle = calculate_angle(shoulder, elbow, wrist)
+
+                    angle_correction = calculate_angle(shoulder,elbow,hip)
                     
                     # Visualize angle
-                    cv2.putText(image, str(angle), 
+                    cv2.putText(image, str(angle_correction), 
                                 tuple(np.multiply(elbow, [640, 480]).astype(int)), 
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
-                                        )
-                    
-                    # Curl counter logic
-                    if angle > 160:
-                        stage = "up"
-                    if angle < 45 and stage =='up':
-                        stage="down"
-                        counter +=1
-                        
-                        print(counter)
+                                ) 
+                    if angle_correction < 167:
+                            cv2.rectangle(image, (250,230), (420,260), (0,0,255), -1)
+                            cv2.putText(image, 'INCORRECT FORM', (270,250), 
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
                             
+                            cv2.imshow("Mediapipe Feed", image)
+                            
+                        
+                    else:
+                            if angle > 160:
+                                stage = "up"
+                            if angle < 45 and stage =='up':
+                                stage="down"
+                                counter +=1
+                                print(counter)              
+                    
+                            cv2.imshow('Mediapipe Feed', image)
+
+                    if cv2.waitKey(10) & 0xFF == ord('q'):
+                        break
+
+                    if (counter == 5 and stage == "up"):
+
+                        cv2.putText(image, 'Set Done!', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
+                        time.sleep(3)
+                        break
                 except:
                     pass
                 
-                # Render curl counter
-                # Setup status box
-                cv2.rectangle(image, (0,0), (225,73), (245,117,16), -1)
-                
-                # Rep data
-                cv2.putText(image, 'REPS', (15,12), 
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
-                cv2.putText(image, str(counter), 
-                            (10,60), 
-                            cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255), 2, cv2.LINE_AA)
-                
-                # Stage data
-                cv2.putText(image, 'STAGE', (65,12), 
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
-                cv2.putText(image, stage, 
-                            (60,60), 
-                            cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255), 2, cv2.LINE_AA)
-                
-                
-                # Render detections
-                mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
-                                        mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=2), 
-                                        mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2) 
-                                        )               
-                
-                cv2.imshow('Mediapipe Feed', image)
-
-                if cv2.waitKey(10) & 0xFF == ord('q'):
-                    break
-
-                if (counter == reps):
-                    time.sleep(1)
-                    cv2.putText(image, 'Set Done!', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
-                    time.sleep(3)
-                    break
             break
                     
+                    
     cap.release()
-    cv2.destroyAllWindows()              
-            
+    cv2.destroyAllWindows()                           
+
+if __name__ == "__main__":
+    start()

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -18,11 +20,6 @@ def calculate_angle(a,b,c):
         angle = 360-angle
         
     return angle 
-
-#st.title("MyFitnessBuddy")
-#run = st.checkbox('Run')
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-
 def start():
 #st.title("MyFitnessBuddy")
 #run = st.checkbox('Run')
@@ -55,10 +52,12 @@ def start():
                     landmarks = results.pose_landmarks.landmark
                     
                     # Get coordinates
+                    shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
+                    elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]
+                    wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]
                     hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
                     knee = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x,landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
-                    ankle = [landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].x,landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].y]
-                     # Setup status box
+                    # Setup status box
                     cv2.rectangle(image, (0,0), (225,73), (245,117,16), -1)
                     
                     # Rep data
@@ -75,34 +74,46 @@ def start():
                                 (60,60), 
                                 cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255), 2, cv2.LINE_AA)
                     
-                    # Calculate angle
-                    angle = calculate_angle(hip, knee, ankle)
                     
-                    # Visualize angle
-                    cv2.putText(image, str(angle), 
-                                tuple(np.multiply(knee, [640, 480]).astype(int)), 
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
-                                            ) 
-
                     # Render detections
                     mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
                                             mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=2), 
                                             mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2) 
-                                            )
+                                            
+                                            )    
+                    # Calculate angle
+                    angle = calculate_angle(shoulder, elbow, wrist)
+                    angle_correction = calculate_angle(shoulder,hip,knee)
+
+                    # Visualize angle
+                    cv2.putText(image, str(angle), 
+                                tuple(np.multiply(elbow, [640, 480]).astype(int)), 
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
+                                )
+                    
+                    if angle_correction > 100:
+                        cv2.rectangle(image, (250,230), (420,260), (0,0,255), -1)
+                        cv2.putText(image, 'INCORRECT FORM', (270,250), 
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
                             
-                    if angle > 160:
-                        stage = "down"
-                    if angle < 100 and stage =='down':
-                        stage="up"
-                        counter +=1
-                        print(counter)              
-            
-                    cv2.imshow('Mediapipe Feed', image)
+                        cv2.imshow("Mediapipe Feed", image)
+                    
+                    
+                    else:
+                        if angle > 160:
+                            stage = "up"
+                        if angle < 60 and stage =='up':
+                            stage="down"
+                            counter +=1
+                            print(counter)           
+                    
+                        cv2.imshow('Mediapipe Feed', image)
 
                     if cv2.waitKey(10) & 0xFF == ord('q'):
                         break
 
                     if (counter == 5 and stage == "up"):
+
                         cv2.putText(image, 'Set Done!', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
                         time.sleep(3)
                         break
@@ -113,7 +124,9 @@ def start():
                     
                     
     cap.release()
-    cv2.destroyAllWindows()
+    cv2.destroyAllWindows()              
+            
+
 
 if __name__ == "__main__":
     start()
