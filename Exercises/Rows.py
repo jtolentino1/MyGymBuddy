@@ -139,6 +139,7 @@ def start(sets, reps):
                         break
 
                 except:
+                    cv2.imshow('Mediapipe Feed', image)
                     pass
             sets_counter += 1
             
@@ -148,7 +149,7 @@ def start(sets, reps):
                     cv2.putText(image, 'FINISHED SET', (100,250), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,0,0), 3, cv2.LINE_AA)
                     cv2.imshow('Mediapipe Feed', image)
                     cv2.waitKey(1)
-                    #time.sleep(60)   
+                    time.sleep(60)   
 
                 except:
                     pass 

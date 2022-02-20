@@ -135,6 +135,7 @@ def start(sets, reps):
                     if cv2.waitKey(10) & 0xFF == ord('q'):
                         break
                 except:
+                    cv2.imshow('Mediapipe Feed', image)
                     pass
             sets_counter += 1
             if (sets_counter!=sets):
