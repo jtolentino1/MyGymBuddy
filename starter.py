@@ -1,7 +1,7 @@
 import mediapipe as mp
 import numpy as np
 import streamlit as st 
-import logic
+import main
 from PIL import Image
 import requests
 from streamlit_lottie import st_lottie
@@ -71,7 +71,7 @@ with col1:
     options = st.button("Click me to begin.")
     if options:
         st.write(exercise_to_do)
-        logic.start(exercise_to_do)
+        main.start(exercise_to_do)
 
 with col2:
     lottie_diagram_url = 'https://assets7.lottiefiles.com/packages/lf20_k17htwqs.json'
