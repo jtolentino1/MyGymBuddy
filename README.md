@@ -23,7 +23,6 @@ One large improvement that we could make would be to have users be able to put i
 ## Requirements
 
 For this project, run these commands to fufill all dependecies to run the project.
-
 ```
 pip install opencv-python
 pip install mediapipe
@@ -33,7 +32,6 @@ pip install requests
 pip install PIL
 pip install st-annotated-text
 ```
-
 ## Running the Project
 
 To run the project, first cd into the repo then run:
