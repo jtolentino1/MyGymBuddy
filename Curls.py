@@ -23,12 +23,13 @@ def calculate_angle(a,b,c):
 
 def start(reps):
     print(reps)
-
+#st.title("MyFitnessBuddy")
+#run = st.checkbox('Run')
     cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
     counter = 0
 
 
-    while counter < reps:
+    while True:
         # Curl counter variables
         stage = None
 
@@ -106,15 +107,14 @@ def start(reps):
 
                 if cv2.waitKey(10) & 0xFF == ord('q'):
                     break
-        
-    #             if (counter == reps):
-    #                 time.sleep(1)
-    #                 cv2.putText(image, 'Set Done!', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
-    #                 time.sleep(3)
-    #                 break
-    #         break
-                    
-    # cap.release()
-    # cv2.destroyAllWindows()              
 
-start(3)
+                if (counter == reps):
+                    time.sleep(1)
+                    cv2.putText(image, 'Set Done!', (200,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
+                    time.sleep(3)
+                    break
+            break
+                    
+    cap.release()
+    cv2.destroyAllWindows()              
+            
