@@ -7,10 +7,9 @@
  
  ## Showcase
  
-<img width="786" alt="Screen Shot 2022-02-20 at 1 09 37 PM" src="https://user-images.githubusercontent.com/79039790/154862243-53c14b3e-fa1b-4ca8-8784-8c7fc41248a4.png">
+<img width="789" alt="Screen Shot 2022-02-20 at 1 12 12 PM" src="https://user-images.githubusercontent.com/79039790/154862335-b06ab19b-4ad9-41a7-a42e-3432315ae206.png">
 
- <img width="780" alt="Screen Shot 2022-02-20 at 1 09 45 PM" src="https://user-images.githubusercontent.com/79039790/154862275-9439b317-0b6c-471a-b3ac-57f97af56bc0.png">
-
+<img width="789" alt="Screen Shot 2022-02-20 at 1 12 19 PM" src="https://user-images.githubusercontent.com/79039790/154862339-6e7f38db-bd7d-4737-8680-38079318e6f3.png">
 
  
  ## What we learned
