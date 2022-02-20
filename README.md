@@ -7,14 +7,14 @@ MyGymBuddy is python web application (hosted using streamlit) that uses computer
   
  ## Showcase
  
+  #### Front page of the website
  ![alt text](https://github.com/jtolentino1/MyGymBuddy/blob/main/showcase1.png)
- <Front page of the website>
  
+  #### Selection of exercise with tab view
  ![alt text](https://github.com/jtolentino1/MyGymBuddy/blob/main/showcase2.png)
- <Selection of exercise with tab view>
-  
+ 
+   #### Webcam view of the squat exercise
   ![alt text](https://github.com/jtolentino1/MyGymBuddy/blob/main/showcase3.png)
-  <Webcam view of the squat exercise>
  
  ## What we learned
  
