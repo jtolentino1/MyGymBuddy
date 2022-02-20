@@ -2,7 +2,6 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import time
-
 #import streamlit as st 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
@@ -114,8 +113,6 @@ def start(reps):
                     break
                 
             break
-
-    cap.release()
-    cv2.destroyAllWindows()              
-
+                          
 start(0)
+
