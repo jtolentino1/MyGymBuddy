@@ -122,6 +122,3 @@ def start(sets, reps):
     time.sleep(60)                      
     cap.release()
     cv2.destroyAllWindows()         
-
-if __name__ == "__main__":
-    start(1,5)

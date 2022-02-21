@@ -32,7 +32,3 @@ def start(arr):
             reps = int(arr['Benchpress']['reps'])
             sets = int(arr['Benchpress']['sets'])
             Exercises.BenchPress.start(sets,reps)
-
-if __name__ == "__main__":
-    arr = {"Bicep Curl": {"reps": 3, "sets": 1}, "Rows": {"reps": 3, "sets": 1}}
-    start(arr)
